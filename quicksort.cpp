@@ -1,36 +1,41 @@
 #include<iostream>
 using namespace std;
 
-void quickSort(int arr[10], int low, int high)
+void Swap(int a[10], int i, int j)
 {
-    int pivert = arr[low];
-    int i = low+1, j = high;
     int temp;
-
-    while (i<j)
-    {
-        while(pivert > arr[i])
-        {
-            i++;
-        }
-        while(pivert < arr[j])
-        {
-            j--;
-        }
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;   
-    }
-    arr[low] = arr[i];
-    arr[i] = pivert;
-    quickSort(arr, low, i-1);
-    quickSort(arr, i+1, high);
-    for(i=0;i<high;i++)
-    {
-        cout<<arr[i];
-    }
+    temp = a[i];
+    a[i] = a[j];
+    a[j] = temp;
 }
 
+void quickSort(int a[10], int low, int high)
+{
+    if(low < high)
+    {
+        int pivot = a[low];
+        int i = low, j = high;
+        while(i<=j)
+        {
+            while(a[i] <= pivot)
+            {
+                i++;
+            }
+            while(a[j] > pivot)
+            {
+                j--;
+            }
+            if (i<j)
+            {           
+                Swap(a, i, j);
+            }
+            
+        }
+        Swap(a, low, j);
+        quickSort(a, low, j-1);
+        quickSort(a, j+1, high);
+    }
+}
 
 int main()
 {
@@ -42,5 +47,12 @@ int main()
     {
         cin>>array[i];
     }
-    quickSort(array, 0, noOfEle);
+    cout<<"processing..."<<endl;
+    quickSort(array, 0, noOfEle-1);
+    for(int i=0; i<noOfEle; i++)
+    {
+        cout<<array[i]<<" ";
+    }
+    cout<<endl;
 }
+
